@@ -23,12 +23,16 @@ steps:
 
 - task: Npm@1
   inputs:
+    command: 'install'
+    workingDir: 'frontend'
+  displayName: 'Installing modules in frontend'
+
+- task: Npm@1
+  inputs:
     command: 'custom'
     workingDir: 'frontend'
     customCommand: 'run build'
-  displayName: 'Installing modules in frontend'
-  env:
-    PATH: /opt/homebrew/bin:$(PATH)
+  displayName: 'Build modules in frontend'
 
 - task: CopyFiles@2
   inputs:
