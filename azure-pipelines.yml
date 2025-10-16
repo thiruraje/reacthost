@@ -27,6 +27,8 @@ steps:
     workingDir: 'frontend'
     customCommand: 'run build'
   displayName: 'Installing modules in frontend'
+  env:
+    PATH: /opt/homebrew/bin:$(PATH)
 
 - task: CopyFiles@2
   inputs:
