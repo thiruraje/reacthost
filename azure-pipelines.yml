@@ -37,7 +37,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     Contents: |
-      frontend/dist/**
+      frontend/build/**
       backend/**
     TargetFolder: $(Build.ArtifactStagingDirectory)
 
