@@ -1,21 +1,26 @@
 import express from "express";
-const path = require('path');
-import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import { items } from "./data.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
-app.use(cors());
+app.use(express.json());
 
-// Serve React build
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-});
-
+// ✅ 1. Define API routes FIRST
 app.get("/api/items", (req, res) => {
   res.json(items);
 });
 
-const PORT = 5001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// ✅ 2. Serve React build
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// ✅ 3. Catch-all route (for React Router)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
+
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
