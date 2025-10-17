@@ -1,4 +1,5 @@
 import express from "express";
+const path = require('path');
 import cors from "cors";
 import { items } from "./data.js";
 
