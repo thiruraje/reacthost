@@ -34,10 +34,14 @@ steps:
     customCommand: 'run build'
   displayName: 'Build modules in frontend'
 
+- script: |
+    mkdir -p backend/build
+    cp -r frontend/build/* backend/build/
+  displayName: 'Copy React build to backend'
+
 - task: CopyFiles@2
   inputs:
     Contents: |
-      frontend/build/**
       backend/**
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
