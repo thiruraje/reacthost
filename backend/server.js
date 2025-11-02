@@ -3,22 +3,23 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { items } from "./data.js";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "build")));
+
 
 const app = express();
 app.use(express.json());
 
-// ✅ 1. Define API routes FIRST
+// API route
 app.get("/api/items", (req, res) => {
   res.json(items);
 });
-console.log("Serving static from:", path.join(__dirname, "build"));
 
-// ✅ 2. Serve React build
-app.use(express.static(path.join(__dirname, "build")));
+// Serve React build
 
-// ✅ 3. Catch-all route (for React Router)
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
