@@ -13,13 +13,14 @@ app.use(express.json());
 app.get("/api/items", (req, res) => {
   res.json(items);
 });
+console.log("Serving static from:", path.join(__dirname, "build"));
 
 // ✅ 2. Serve React build
-app.use(express.static(path.join(__dirname, "./build")));
+app.use(express.static(path.join(__dirname, "build")));
 
 // ✅ 3. Catch-all route (for React Router)
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./build", "index.html"));
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 const PORT = process.env.PORT || 8080;
