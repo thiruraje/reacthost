@@ -9,6 +9,11 @@ trigger:
 pool:
   name: 'myagent'
 
+variables:
+  node_version: '20.x'
+  frontend_path: 'frontend'
+  backend_path: 'backend'
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -39,14 +44,17 @@ steps:
     cp -r frontend/build/* backend/build/
   displayName: 'Copy React build to backend'
 
-- task: CopyFiles@2
+- task: ArchiveFiles@2
   inputs:
-    Contents: |
-      backend/**
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    rootFolderOrFile: '$(backend_path)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+    replaceExistingArchive: true
+  displayName: 'Archive app for deployment'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'release'
-    publishLocation: 'Container'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/app.zip'
+    ArtifactName: 'drop'
+  displayName: 'Publish build artifact'
