@@ -7,8 +7,7 @@ import { items } from "./data.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "build")));
-
+app.use(express.static(path.join(__dirname, '../public')));
 
 const app = express();
 app.use(express.json());
@@ -20,8 +19,8 @@ app.get("/api/items", (req, res) => {
 
 // Serve React build
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 8080;
